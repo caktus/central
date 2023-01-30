@@ -30,9 +30,9 @@ services:
       - /data/transfer:/data/transfer
       - ./files/service/config.json.template:/usr/share/odk/config.json.template
     environment:
-      - DOMAIN
-      - SYSADMIN_EMAIL
-      - ENKETO_API_KEY
+      - DOMAIN=${DOMAIN}
+      - HTTPS_PORT=${HTTPS_PORT:-443}
+      - SYSADMIN_EMAIL=${SYSADMIN_EMAIL}
     command: [ "./wait-for-it.sh", "postgres:5432", "--", "./start-odk.sh" ]
     restart: always
     logging:
@@ -57,7 +57,7 @@ services:
       options:
         max-file: "30"
   pyxform:
-    image: 'ghcr.io/getodk/pyxform-http:v1.7.0'
+    image: 'ghcr.io/getodk/pyxform-http:v1.11.1'
     restart: always
   secrets:
     image: ghcr.io/caktus/central-secrets:gh-images
@@ -74,8 +74,9 @@ services:
       - enketo_redis_main
       - enketo_redis_cache
     environment:
-      - DOMAIN
+      - DOMAIN=${DOMAIN}
       - SUPPORT_EMAIL=${SYSADMIN_EMAIL}
+      - HTTPS_PORT=${HTTPS_PORT:-443}
   enketo_redis_main:
     image: redis:5
     volumes:

@@ -1,4 +1,4 @@
-FROM node:14.17.6 as intermediate
+FROM node:16.17.0 as intermediate
 
 COPY ./ ./
 RUN files/prebuild/write-version.sh
@@ -23,6 +23,7 @@ COPY files/local/customssl/*.pem /etc/customssl/live/local/
 COPY files/nginx/default /etc/nginx/sites-enabled/
 COPY files/nginx/inflate_body.lua /usr/share/nginx/
 COPY files/nginx/odk.conf.template /usr/share/nginx/
+COPY files/nginx/common-headers.nginx.conf /usr/share/nginx/
 COPY files/nginx/certbot.conf /usr/share/nginx/
 COPY files/nginx/redirector.conf /usr/share/nginx/
 COPY --from=intermediate client/dist/ /usr/share/nginx/html/

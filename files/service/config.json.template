@@ -23,11 +23,12 @@
       "apiKey": "${ENKETO_API_KEY}"
     },
     "env": {
-      "domain": "https://${DOMAIN}",
+      "domain": "https://${DOMAIN}:${HTTPS_PORT}",
       "sysadminAccount": "${SYSADMIN_EMAIL}"
     },
     "external": {
       "sentry": {
+        "orgSubdomain": "o130137",
         "key": "3cf75f54983e473da6bd07daddf0d2ee",
         "project": "1298632"
       }
