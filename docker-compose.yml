@@ -18,7 +18,7 @@ services:
       - MAILNAME=${DOMAIN}
     restart: always
   service:
-    image: ghcr.io/mattelacchiato/service:latest
+    image: ghcr.io/caktus/central-service:gh-images
     depends_on:
       - secrets
       - postgres
@@ -38,7 +38,7 @@ services:
     logging:
       driver: local
   nginx:
-    image: ghcr.io/mattelacchiato/nginx:latest
+    image: ghcr.io/caktus/central-nginx:gh-images
     depends_on:
       - service
       - enketo
@@ -60,12 +60,12 @@ services:
     image: 'ghcr.io/getodk/pyxform-http:v1.7.0'
     restart: always
   secrets:
-    image: ghcr.io/mattelacchiato/secrets:latest
+    image: ghcr.io/caktus/central-secrets:gh-images
     volumes:
       - secrets:/etc/secrets
     command: './generate-secrets.sh'
   enketo:
-    image: ghcr.io/mattelacchiato/enketo:latest
+    image: ghcr.io/caktus/central-enketo:gh-images
     volumes:
       - secrets:/etc/secrets
     restart: always
