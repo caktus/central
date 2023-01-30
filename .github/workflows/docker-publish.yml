@@ -7,7 +7,7 @@ name: Docker
 
 on:
   push:
-    branches: [ master ]
+    branches: [ gh-images ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
 
