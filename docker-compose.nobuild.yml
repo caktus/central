@@ -35,9 +35,7 @@ services:
       - DKIM_KEY_PATH=/etc/exim4/dkim.key.temp
     restart: always
   service:
-    build:
-      context: .
-      dockerfile: service.dockerfile
+    image: ghcr.io/caktus/central-service:latest
     depends_on:
       - secrets
       - postgres14
@@ -47,6 +45,7 @@ services:
     volumes:
       - secrets:/etc/secrets
       - /data/transfer:/data/transfer
+      - ./files/service/config.json.template:/usr/share/odk/config.json.template
     environment:
       - DOMAIN=${DOMAIN}
       - SYSADMIN_EMAIL=${SYSADMIN_EMAIL}
@@ -76,11 +75,7 @@ services:
     logging:
       driver: local
   nginx:
-    build:
-      context: .
-      args:
-        - OIDC_ENABLED=${OIDC_ENABLED:-false}
-      dockerfile: nginx.dockerfile
+    image: ghcr.io/caktus/central-nginx:latest
     depends_on:
       - service
       - enketo
@@ -105,18 +100,14 @@ services:
     image: 'ghcr.io/getodk/pyxform-http:v1.12.2'
     restart: always
   secrets:
+    image: ghcr.io/caktus/central-secrets:latest
     volumes:
       - secrets:/etc/secrets
-    build:
-      context: .
-      dockerfile: secrets.dockerfile
     command: './generate-secrets.sh'
   enketo:
+    image: ghcr.io/caktus/central-enketo:latest
     volumes:
       - secrets:/etc/secrets
-    build:
-      context: .
-      dockerfile: enketo.dockerfile
     restart: always
     depends_on:
       - secrets

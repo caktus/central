@@ -1,10 +1,5 @@
 name: Docker
 
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 on:
   push:
     branches: [gh-images]
@@ -23,6 +18,7 @@ jobs:
         build_args: [""]
         flavor: [""]
         include:
+          # Build additional OIDC flavor for nginx (tags will be suffixed with -oidc)
           - image: nginx
             flavor: |
               latest=true
@@ -52,7 +48,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY_WITH_PATH }}/central-${{ matrix.image }}
           flavor: ${{ matrix.flavor }}
-          # generate Docker tags based on the following events/attributes
+          # Generate Docker tags based on the following events/attributes
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}}
