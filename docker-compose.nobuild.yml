@@ -45,7 +45,6 @@ services:
     volumes:
       - secrets:/etc/secrets
       - /data/transfer:/data/transfer
-      - ./files/service/config.json.template:/usr/share/odk/config.json.template
     environment:
       - DOMAIN=${DOMAIN}
       - SYSADMIN_EMAIL=${SYSADMIN_EMAIL}
