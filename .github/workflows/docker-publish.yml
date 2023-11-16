@@ -25,7 +25,8 @@ jobs:
         include:
           - image: nginx
             flavor: |
-              prefix=oidc-,onlatest=true
+              latest=true
+              suffix=-oidc,onlatest=true
             build_args: |
               OIDC_ENABLED=true
     runs-on: ubuntu-latest
