@@ -18,7 +18,6 @@ def main():
     yml["services"]["pyxform"]["ports"] = [80]
     yml["services"]["mail"]["ports"] = [25]
     yml["services"]["service"]["ports"] = [8383]
-    yml["services"]["nginx"]["labels"] = {"kompose.service.type": "loadbalancer"}
     ghcr_services = ["service", "nginx", "enketo", "secrets"]
     for svc in ghcr_services:
         yml["services"][svc].pop("build")

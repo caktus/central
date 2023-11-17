@@ -77,8 +77,6 @@ services:
       driver: local
       options:
         max-file: '30'
-    labels:
-      kompose.service.type: loadbalancer
     image: ghcr.io/caktus/central-nginx
   pyxform:
     image: ghcr.io/getodk/pyxform-http:v1.12.2
