@@ -38,7 +38,7 @@ spec:
               value: "1298632"
             - name: SSL_TYPE
               value: letsencrypt
-          image: nginx
+          image: ghcr.io/caktus/central-nginx
           livenessProbe:
             exec:
               command:

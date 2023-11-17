@@ -19,6 +19,10 @@ def main():
     yml["services"]["mail"]["ports"] = [25]
     yml["services"]["service"]["ports"] = [8383]
     yml["services"]["nginx"]["labels"] = {"kompose.service.type": "loadbalancer"}
+    ghcr_services = ["service", "nginx", "enketo", "secrets"]
+    for svc in ghcr_services:
+        yml["services"][svc].pop("build")
+        yml["services"][svc]["image"] = f"ghcr.io/caktus/central-{svc}"
     print(oyaml.dump(yml))
 
 

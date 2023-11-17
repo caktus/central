@@ -70,7 +70,7 @@ spec:
             - name: SENTRY_PROJECT
               value: "1298632"
             - name: SYSADMIN_EMAIL
-          image: service
+          image: ghcr.io/caktus/central-service
           name: service
           ports:
             - containerPort: 8383

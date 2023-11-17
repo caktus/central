@@ -11,9 +11,6 @@ services:
     ports:
     - 25
   service:
-    build:
-      context: .
-      dockerfile: service.dockerfile
     depends_on:
     - secrets
     - mail
@@ -56,12 +53,8 @@ services:
       driver: local
     ports:
     - 8383
+    image: ghcr.io/caktus/central-service
   nginx:
-    build:
-      context: .
-      args:
-      - OIDC_ENABLED=${OIDC_ENABLED:-false}
-      dockerfile: nginx.dockerfile
     depends_on:
     - service
     - enketo
@@ -86,6 +79,7 @@ services:
         max-file: '30'
     labels:
       kompose.service.type: loadbalancer
+    image: ghcr.io/caktus/central-nginx
   pyxform:
     image: ghcr.io/getodk/pyxform-http:v1.12.2
     restart: always
@@ -94,16 +88,11 @@ services:
   secrets:
     volumes:
     - secrets:/etc/secrets
-    build:
-      context: .
-      dockerfile: secrets.dockerfile
     command: ./generate-secrets.sh
+    image: ghcr.io/caktus/central-secrets
   enketo:
     volumes:
     - secrets:/etc/secrets
-    build:
-      context: .
-      dockerfile: enketo.dockerfile
     restart: always
     depends_on:
     - secrets
@@ -115,6 +104,7 @@ services:
     - HTTPS_PORT=${HTTPS_PORT:-443}
     ports:
     - 8005
+    image: ghcr.io/caktus/central-enketo
   enketo_redis_main:
     image: redis:7.2
     volumes:
