@@ -6,14 +6,14 @@ metadata:
     kompose.version: 1.31.2 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: enketo-redis-main
-  name: enketo_redis_main
+    io.kompose.service: enketo-redis-cache
+  name: enketo-redis-cache
 spec:
   ports:
-    - name: "6379"
-      port: 6379
-      targetPort: 6379
+    - name: "6380"
+      port: 6380
+      targetPort: 6380
   selector:
-    io.kompose.service: enketo-redis-main
+    io.kompose.service: enketo-redis-cache
 status:
   loadBalancer: {}
