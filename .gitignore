@@ -2,6 +2,8 @@
 *.swp
 *.swo
 /.env
+.envrc
+.direnv
 /docker-compose.override.yml
 /version.txt
 
@@ -15,3 +17,4 @@
 /files/mail/rsa.public
 
 /files/dkim/*
+

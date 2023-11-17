@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.helm.yml -c
+    kompose.version: 1.31.2 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: enketo-redis-cache
+  name: enketo-redis-cache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: enketo-redis-cache
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.helm.yml -c
+        kompose.version: 1.31.2 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/central-default: "true"
+        io.kompose.service: enketo-redis-cache
+    spec:
+      containers:
+        - args:
+            - redis-server
+            - /usr/local/etc/redis/redis.conf
+          image: redis:7.2
+          name: enketo-redis-cache
+          ports:
+            - containerPort: 6380
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /usr/local/etc/redis/redis.conf
+              name: enketo-redis-cache-claim0
+              readOnly: true
+            - mountPath: /data
+              name: enketo-redis-cache
+      restartPolicy: Always
+      volumes:
+        - name: enketo-redis-cache-claim0
+          persistentVolumeClaim:
+            claimName: enketo-redis-cache-claim0
+            readOnly: true
+        - name: enketo-redis-cache
+          persistentVolumeClaim:
+            claimName: enketo-redis-cache
+status: {}
