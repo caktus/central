@@ -5,11 +5,36 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: ghcr.io/caktus/central-service
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "sha-9759473"
 
+central:
+  env:
+    DB_HOST: postgres14
+    DB_NAME: odk
+    DB_PASSWORD: odk
+    DB_SSL: "null"
+    DB_USER: odk
+    DOMAIN: ""
+    EMAIL_FROM: no-reply@
+    EMAIL_HOST: mail
+    EMAIL_IGNORE_TLS: "true"
+    EMAIL_PASSWORD: ""
+    EMAIL_PORT: "25"
+    EMAIL_SECURE: "false"
+    EMAIL_USER: ""
+    HTTPS_PORT: "443"
+    NODE_OPTIONS: ""
+    OIDC_CLIENT_ID: ""
+    OIDC_CLIENT_SECRET: ""
+    OIDC_ENABLED: "false"
+    OIDC_ISSUER_URL: ""
+    SENTRY_KEY: 3cf75f54983e473da6bd07daddf0d2ee
+    SENTRY_ORG_SUBDOMAIN: o130137
+    SENTRY_PROJECT: "1298632"
+    SYSADMIN_EMAIL: ""
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -38,7 +63,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 8383
 
 ingress:
   enabled: false
