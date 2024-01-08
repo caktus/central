@@ -58,3 +58,6 @@ backend:
 
 frontend:
   enabled: false
+
+global:
+  centralDomain: www.example.com
