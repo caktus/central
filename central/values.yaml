@@ -2,6 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global:
+  centralDomain: www.example.com
+
 enketo-redis-main:
   enabled: true
 
@@ -29,9 +32,19 @@ enketo-redis-cache:
 enketo:
   enabled: true
 
+frontend:
+  enabled: true
+  environmentVariables:
+    CERTBOT_EMAIL: ""
+    DOMAIN: ""
+    SENTRY_KEY: 3cf75f54983e473da6bd07daddf0d2ee
+    SENTRY_ORG_SUBDOMAIN: o130137
+    SENTRY_PROJECT: "1298632"
+    SSL_TYPE: upstream
+
 backend:
   enabled: false
-  env:
+  environmentVariables:
     DB_HOST: postgres14
     DB_NAME: odk
     DB_PASSWORD: odk
@@ -55,9 +68,3 @@ backend:
     SENTRY_ORG_SUBDOMAIN: o130137
     SENTRY_PROJECT: "1298632"
     SYSADMIN_EMAIL: ""
-
-frontend:
-  enabled: false
-
-global:
-  centralDomain: www.example.com

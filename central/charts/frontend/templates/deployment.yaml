@@ -33,8 +33,6 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["wait-for-it"]
-          args: [ "{{ .Values.central.env.DB_HOST }}:5432", "--", "./start-odk.sh" ]
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
@@ -49,6 +47,14 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: ENKETO_URL
+              value: '{{ .Values.config.enketoUrl | default (printf "http://%s-enketo:8005" .Release.Name) }}'
+            - name: SERVICE_URL
+              value: '{{ .Values.config.serviceUrl | default (printf "http://%s-backend:8383" .Release.Name) }}'
+          envFrom:
+            - secretRef:
+                name: {{ include "frontend.fullname" . }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
