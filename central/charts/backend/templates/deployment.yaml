@@ -14,7 +14,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: {{ toYaml .Values.global.enketoSecrets | sha256sum }}
+        checksum/config-enketo: {{ toYaml .Values.global.enketoSecrets | sha256sum }}
+        checksum/config-service: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
