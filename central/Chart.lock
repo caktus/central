@@ -14,5 +14,8 @@ dependencies:
 - name: frontend
   repository: file://charts/frontend
   version: 0.1.0
-digest: sha256:b35b4ac1a2f1ae95a3b2370422cf6871a80126d2e789ef2a62963cd5e572e496
-generated: "2024-01-08T16:16:45.329939-05:00"
+- name: pyxform
+  repository: file://charts/pyxform
+  version: 0.1.0
+digest: sha256:49d8d9b862ffb1acf517a7ef65fc87f10fbc8948606761364eda4f692a3dd71c
+generated: "2024-01-09T13:52:08.550274-05:00"

@@ -76,3 +76,6 @@ backend:
     SENTRY_ORG_SUBDOMAIN: o130137
     SENTRY_PROJECT: "1298632"
     SYSADMIN_EMAIL: ""
+
+pyxform:
+  enabled: true
