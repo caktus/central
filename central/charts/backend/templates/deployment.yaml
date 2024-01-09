@@ -13,8 +13,9 @@ spec:
       {{- include "backend.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        checksum/config: {{ toYaml .Values.global.enketoSecrets | sha256sum }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -27,6 +28,10 @@ spec:
       serviceAccountName: {{ include "backend.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: secret-volume
+          secret:
+            secretName: {{ .Values.global.enketoSecretName }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -39,6 +44,7 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+{{- /*
           livenessProbe:
             httpGet:
               path: /
@@ -47,11 +53,16 @@ spec:
             httpGet:
               path: /
               port: http
+*/}}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           envFrom:
             - secretRef:
                 name: {{ include "backend.fullname" . }}
+          volumeMounts:
+            - name: secret-volume
+              readOnly: true
+              mountPath: "/etc/secrets"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

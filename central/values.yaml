@@ -4,6 +4,14 @@
 
 global:
   centralDomain: www.example.com
+  enketoSecretName: central-enketo-secrets
+  enketoSecrets: {}
+    # Set to 64-character random string
+    # enketoSecret: ""
+    # Set to 32-character random string
+    # enketoLessSecret: ""
+    # Set to 128-character random string
+    # enketoApiKey: ""
 
 enketo-redis-main:
   enabled: true
@@ -43,7 +51,7 @@ frontend:
     SSL_TYPE: upstream
 
 backend:
-  enabled: false
+  enabled: true
   environmentVariables:
     DB_HOST: postgres14
     DB_NAME: odk
