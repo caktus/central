@@ -15,10 +15,12 @@ nameOverride: ""
 fullnameOverride: ""
 
 config:
-  # FIXME: Remove defaults
-  enketoSecret: eBOo3mUWjzcUvBh2o5POBxlKO4DNIMzqaiCxd5eXVrEUZ5ZwnZTIkYQ9233IBNbb
-  enketoLessSecret: olgMYeb1X8hyoCNrtgfdCHbRUh9pQTx6
-  enketoApiKey: LQRQXCBINxACdD27Z17KnRUcef3hyChlJ3Sp9gKnkkExtZAH18CzZCm1QPvaLMRQL0M1Q5bBOGAGpb2hhQ7sO8VA5T9X6bQK6pQSCKFFo3wf3v6QjkWmh0BoZVuwKUtN
+  # Set to 64-character random string
+  # enketoSecret: ""
+  # Set to 32-character random string
+  # enketoLessSecret: ""
+  # Set to 128-character random string
+  # enketoApiKey: ""
 
   # redisMainHost: ""
   redisMainPort: "6379"
