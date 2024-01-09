@@ -44,16 +44,18 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-{{- /*
           livenessProbe:
-            httpGet:
-              path: /
-              port: http
+            exec:
+              command:
+              - bash 
+              - -c
+              - 'STATUS=$(curl --silent --include --request POST --header "Content-Type: application/json" --data-binary "{\"email\": \"email\",\"password\": \"password\"}" --write-out "%{http_code}" --output /dev/null http://localhost:8383/v1/sessions); if [[ "$STATUS" == "401" ]]; then exit 0; else exit 1; fi'
           readinessProbe:
-            httpGet:
-              path: /
-              port: http
-*/}}
+            exec:
+              command:
+              - bash 
+              - -c
+              - 'STATUS=$(curl --silent --include --request POST --header "Content-Type: application/json" --data-binary "{\"email\": \"email\",\"password\": \"password\"}" --write-out "%{http_code}" --output /dev/null http://localhost:8383/v1/sessions); if [[ "$STATUS" == "401" ]]; then exit 0; else exit 1; fi'
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           envFrom:
