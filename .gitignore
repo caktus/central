@@ -18,4 +18,4 @@
 
 /files/dkim/*
 
-central/charts/*.tgz
+helm/charts/*.tgz
