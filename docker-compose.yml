@@ -1,4 +1,3 @@
-version: "3"
 services:
   pgbouncer:
     image: edoburu/pgbouncer
@@ -9,8 +8,27 @@ services:
       - DB_NAME=${DB_NAME:-odk}
       - DB_PORT=${DB_PORT:-5432}
       - SERVER_TLS_SSLMODE=require
+#      POSTGRES_USER: odk
+#      POSTGRES_PASSWORD: odk
+#      POSTGRES_DB: odk
+#    restart: always
+#  postgres:
+#    # This service upgrades from postgres 9.6 to 14.
+#    # The legacy name must be maintained to allow access to the anonymous volume.
+#    build:
+#      context: .
+#      dockerfile: postgres-upgrade.dockerfile
+#    volumes:
+#      - /var/lib/postgresql/data
+#      - postgres14:/var/lib/postgresql/14
+#      - ./files/postgres14/upgrade:/postgres14-upgrade
+#    environment:
+#      PGUSER: odk
+#      POSTGRES_INITDB_ARGS: -U odk
+#      POSTGRES_PASSWORD: odk
+#      POSTGRES_DB: odk
   mail:
-    image: "ixdotai/smtp:v0.5.1"
+    image: "ixdotai/smtp:v0.5.2"
     volumes:
       - ./files/mail/rsa.private:/etc/exim4/dkim.key.temp:ro
     environment:
@@ -80,7 +98,7 @@ services:
       options:
         max-file: "30"
   pyxform:
-    image: 'ghcr.io/getodk/pyxform-http:v1.12.2'
+    image: 'ghcr.io/getodk/pyxform-http:v2.0.3'
     restart: always
   secrets:
     image: ghcr.io/caktus/central-secrets:latest
