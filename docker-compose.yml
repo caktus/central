@@ -17,7 +17,7 @@ services:
       - DKIM_KEY_PATH=/etc/exim4/dkim.key.temp
     restart: always
   service:
-    image: ghcr.io/caktus/central-service:latest
+    image: ghcr.io/caktus/central-service:master
     depends_on:
       - secrets
       - pgbouncer
@@ -60,7 +60,7 @@ services:
     logging:
       driver: local
   nginx:
-    image: ghcr.io/caktus/central-nginx:latest
+    image: ghcr.io/caktus/central-nginx:master
     depends_on:
       - service
       - enketo
@@ -87,12 +87,12 @@ services:
     image: 'ghcr.io/getodk/pyxform-http:v2.0.3'
     restart: always
   secrets:
-    image: ghcr.io/caktus/central-secrets:latest
+    image: ghcr.io/caktus/central-secrets:master
     volumes:
       - secrets:/etc/secrets
     command: './generate-secrets.sh'
   enketo:
-    image: ghcr.io/caktus/central-enketo:latest
+    image: ghcr.io/caktus/central-enketo:master
     volumes:
       - secrets:/etc/secrets
     restart: always
