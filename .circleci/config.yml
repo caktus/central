@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     machine:
-      image: ubuntu-2004:202201-02
+      image: ubuntu-2004:current
 
     steps:
       - checkout
@@ -30,11 +30,16 @@ jobs:
             docker compose up -d
             CONTAINER_NAME=$(docker inspect -f '{{.Name}}' $(docker compose ps -q nginx) | cut -c2-)
             docker run --network container:$CONTAINER_NAME \
-              appropriate/curl -4 --insecure --retry 30 --retry-delay 10 --retry-connrefused https://localhost/ \
+              appropriate/curl -4 --insecure --retry 30 --retry-delay 10 --retry-connrefused https://localhost/ -H 'Host: local' \
               | tee /dev/tty \
               | grep -q 'ODK Central'
             docker run --network container:$CONTAINER_NAME \
-              appropriate/curl -4 --insecure --retry 20 --retry-delay 2 --retry-connrefused https://localhost/v1/projects \
+              appropriate/curl -4 --insecure --retry 20 --retry-delay 2 --retry-connrefused https://localhost/v1/projects -H 'Host: local' \
               | tee /dev/tty \
               | grep -q '\[\]'
-            docker compose exec -T service npx pm2 list | grep -c "online" | grep -q 4 || exit 1
+      - run:
+          name: Verify pm2
+          command: |
+            docker compose exec -T service npx pm2 list \
+              | tee /dev/tty \
+              | grep -c "online" | grep -q 4
