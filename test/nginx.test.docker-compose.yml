@@ -27,6 +27,8 @@ services:
       - SENTRY_ORG_SUBDOMAIN=example
       - SSL_TYPE=selfsign
       - OIDC_ENABLED=false
+      - ENKETO_URL=http://enketo:8005
+      - SERVICE_URL=http://service:8383
     volumes:
       - ../files/nginx/odk.conf.template:/usr/share/odk/nginx/odk.conf.template:ro
       - ../files/nginx/client-config.json.template:/usr/share/odk/nginx/client-config.json.template:ro
