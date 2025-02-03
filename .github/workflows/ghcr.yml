@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        image: [nginx, service]
+        image: [secrets, nginx, service, enketo]
 
     steps:
       - name: Checkout repository
