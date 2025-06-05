@@ -63,7 +63,7 @@ services:
       - EMAIL_IGNORE_TLS=${EMAIL_IGNORE_TLS:-true}
       - EMAIL_USER=${EMAIL_USER:-}
       - EMAIL_PASSWORD=${EMAIL_PASSWORD:-}
-      - ENKETO_URL=${ENKETO_URL:-http://enketo:8005/-}
+      - ENKETO_URL=${ENKETO_URL:-http://enketo:8005}
       - OIDC_ENABLED=${OIDC_ENABLED:-false}
       - OIDC_ISSUER_URL=${OIDC_ISSUER_URL:-}
       - OIDC_CLIENT_ID=${OIDC_CLIENT_ID:-}

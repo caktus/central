@@ -26,7 +26,7 @@
       "port": ${PYXFORM_PORT}
     },
     "enketo": {
-      "url": "${ENKETO_URL}",
+      "url": "${ENKETO_URL}/-",
       "apiKey": "${ENKETO_API_KEY}"
     },
     "env": {
