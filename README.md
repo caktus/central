@@ -15,6 +15,49 @@ This repository serves as an umbrella for the Central project as a whole:
 
 If you are looking for help, please take a look at the [Documentation Website](https://docs.getodk.org/central-intro/). If that doesn't solve your problem, please head over to the [ODK Forum](https://forum.getodk.org) and do a search to see if anybody else has had the same problem. If you've identified a new problem or have a feature request, please post on the forum. We prefer forum posts to GitHub issues because more of the community is on the forum.
 
+## Caktus Release Process
+
+How to sync the fork and update the docker images:
+
+1. Ensure you have the upstream remote added:
+
+   ```
+   git remote add upstream git@github.com:getodk/central.git
+   ```
+
+   Which should create the following in your `.git/config`:
+
+   ```
+   [remote "upstream"]
+        url = git@github.com:getodk/central.git
+        fetch = +refs/heads/*:refs/remotes/upstream/*
+   ```
+
+2. Fetch and merge upstream changes, resolving any conflicts:
+
+   ```
+   git fetch upstream
+   git checkout master
+   git merge upstream/master
+   ```
+
+3. Push the changes and make sure the images build:
+
+   ```
+   git push origin master
+   ```
+
+4. If everything looks good, review the git log to recreate the tag for the release you want to build:
+
+   ```
+   git log
+   git tag -d v2025.1.2
+   git tag v2025.1.2 # be careful as you may include commits since the last tag
+   git push --tags --force
+   ```
+
+5. Verify that the GHCR build passes and pushes images with the new tag: https://github.com/caktus/central/actions
+
 ## Contributing
 
 We would love your contributions to Central. If you have thoughts or suggestions, please share them with us on the [Ideas board](https://forum.getodk.org/c/ideas) on the ODK Forum. If you wish to contribute code, you have the option of working on the Backend server ([contribution guide](https://github.com/getodk/central-backend/blob/master/CONTRIBUTING.md)), the Frontend website ([contribution guide](https://github.com/getodk/central-frontend/blob/master/CONTRIBUTING.md)), or both. To set up a development environment, first follow the [Backend instructions](https://github.com/getodk/central-backend#setting-up-a-development-environment) and then optionally the [Frontend instructions](https://github.com/getodk/central-frontend#setting-up-your-development-environment).
