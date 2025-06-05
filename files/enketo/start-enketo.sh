@@ -14,7 +14,7 @@ assert_size() {
     exit 1
   fi
 
-  actualSize="$(stat -c "%s" "$f")"
+  actualSize="$(stat --dereference --format="%s" "$f")"
   if ! [[ "$actualSize" = "$expectedSize" ]]; then
     log "!!!"
     log "!!! Unexpected file size:"
