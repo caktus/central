@@ -1,4 +1,4 @@
-FROM node:22.14.0-slim AS intermediate
+FROM node:22.22.0-slim AS intermediate
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -15,7 +15,7 @@ RUN files/prebuild/build-frontend.sh
 
 # when upgrading, look for upstream changes to redirector.conf
 # also, confirm setup-odk.sh strips out HTTP-01 ACME challenge location
-FROM jonasal/nginx-certbot:5.4.0
+FROM jonasal/nginx-certbot:6.0.1
 
 EXPOSE 80
 EXPOSE 443
@@ -32,6 +32,7 @@ COPY files/nginx/setup-odk.sh \
      /scripts/
 
 COPY files/nginx/redirector.conf /usr/share/odk/nginx/
+COPY files/nginx/backend.conf /usr/share/odk/nginx/
 COPY files/nginx/common-headers.conf /usr/share/odk/nginx/
 COPY files/nginx/odk.conf.template /usr/share/odk/nginx/
 COPY files/nginx/client-config.json.template /usr/share/odk/nginx/
