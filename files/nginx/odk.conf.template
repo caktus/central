@@ -169,6 +169,8 @@ server {
   location ~ ^/v\d+/oidc/callback$ {
     include /usr/share/odk/nginx/common-headers.conf;
     include /usr/share/odk/nginx/backend.conf;
+    # Override the proxy_pass set in backend.conf
+    proxy_pass ${SERVICE_URL};
   }
 
   location ~ ^/v\d {
@@ -177,6 +179,8 @@ server {
 
     include /usr/share/odk/nginx/common-headers.conf;
     include /usr/share/odk/nginx/backend.conf;
+    # Override the proxy_pass set in backend.conf
+    proxy_pass ${SERVICE_URL};
   }
 
   location @blank.html {
