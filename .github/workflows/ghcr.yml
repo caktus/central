@@ -3,7 +3,7 @@ name: GHCR
 on:
   workflow_dispatch:
   push:
-    branches: [master, merge-upstream-for-v2025.4.2]
+    branches: [master]
     tags: ["v*.*.*"]
 
 env:
