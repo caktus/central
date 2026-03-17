@@ -3,7 +3,7 @@ name: GHCR
 on:
   workflow_dispatch:
   push:
-    branches: [master, config-db-port]
+    branches: [master]
     tags: ["v*.*.*"]
 
 env:
