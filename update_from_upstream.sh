@@ -1,5 +1,6 @@
-#!/usr/bin/bash
-set -euo pipefail
+#!/bin/bash -eu
+set -o pipefail
+shopt -s inherit_errexit
 
 if [ -z "${1:-}" ]; then
     echo "Usage: $0 <tag> [--continue]"
