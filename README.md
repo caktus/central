@@ -19,44 +19,19 @@ If you are looking for help, please take a look at the [Documentation Website](h
 
 How to sync the fork and update the docker images:
 
-1. Ensure you have the upstream remote added:
-
+1. Run the `update_from_upstream.sh` script with the tag of the version you want to update to. For example:
+   ```bash
+   ./update_from_upstream.sh v2025.4.3
    ```
-   git remote add upstream git@github.com:getodk/central.git
-   ```
+   The script will fetch the specified tag from upstream, merge it into `master`, recreate the tag pointing at the merge commit, and push both `master` and the tag to origin.
 
-   Which should create the following in your `.git/config`:
-
-   ```
-   [remote "upstream"]
-        url = git@github.com:getodk/central.git
-        fetch = +refs/heads/*:refs/remotes/upstream/*
+   If there are merge conflicts, the script will stop and print instructions. Resolve the conflicts, then resume with:
+   ```bash
+   git add -u
+   ./update_from_upstream.sh <tag> --continue
    ```
 
-2. Fetch and merge upstream changes, resolving any conflicts:
-
-   ```
-   git fetch upstream
-   git checkout master
-   git merge upstream/master
-   ```
-
-3. Push the changes and make sure the images build:
-
-   ```
-   git push origin master
-   ```
-
-4. If everything looks good, review the git log to recreate the tag for the release you want to build:
-
-   ```
-   git log
-   git tag -d v2025.1.2
-   git tag v2025.1.2 # be careful as you may include commits since the last tag
-   git push --tags --force
-   ```
-
-5. Verify that the GHCR build passes and pushes images with the new tag: https://github.com/caktus/central/actions
+2. Verify that the GHCR build passes and pushes images with the new tag: https://github.com/caktus/central/actions
 
 ## Contributing
 
