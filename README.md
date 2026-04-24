@@ -15,24 +15,6 @@ This repository serves as an umbrella for the Central project as a whole:
 
 If you are looking for help, please take a look at the [Documentation Website](https://docs.getodk.org/central-intro/). If that doesn't solve your problem, please head over to the [ODK Forum](https://forum.getodk.org) and do a search to see if anybody else has had the same problem. If you've identified a new problem or have a feature request, please post on the forum. We prefer forum posts to GitHub issues because more of the community is on the forum.
 
-## Caktus Release Process
-
-How to sync the fork and update the docker images:
-
-1. Run the `update_from_upstream.sh` script with the tag of the version you want to update to. For example:
-   ```bash
-   ./update_from_upstream.sh v2025.4.3
-   ```
-   The script will fetch the specified tag from upstream, merge it into `master`, recreate the tag pointing at the merge commit, and push both `master` and the tag to origin.
-
-   If there are merge conflicts, the script will stop and print instructions. Resolve the conflicts, then resume with:
-   ```bash
-   git add -u
-   ./update_from_upstream.sh <tag> --continue
-   ```
-
-2. Verify that the GHCR build passes and pushes images with the new tag: https://github.com/caktus/central/actions
-
 ## Contributing
 
 We would love your contributions to Central. If you have thoughts or suggestions, please share them with us on the [Ideas board](https://forum.getodk.org/c/ideas) on the ODK Forum. If you wish to contribute code, you have the option of working on the Backend server ([contribution guide](https://github.com/getodk/central-backend/blob/master/CONTRIBUTING.md)), the Frontend website ([contribution guide](https://github.com/getodk/central-frontend/blob/master/CONTRIBUTING.md)), or both. To set up a development environment, first follow the [Backend instructions](https://github.com/getodk/central-backend#setting-up-a-development-environment) and then optionally the [Frontend instructions](https://github.com/getodk/central-frontend#setting-up-your-development-environment).
