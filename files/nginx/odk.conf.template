@@ -160,7 +160,7 @@ server {
   # reach Enketo — this one will not be intercepted.
   location ~ ^/(?:-|enketo-passthrough)(?:/|$) {
     rewrite ^/enketo-passthrough(/.*)?$ /-$1 break;
-    proxy_pass http://enketo:8005;
+    proxy_pass ${ENKETO_URL};
     proxy_redirect off;
     proxy_set_header Host $host;
     proxy_hide_header Vary;
