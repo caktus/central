@@ -55,9 +55,6 @@ SENTRY_DSN_FRONTEND_ROOT="$(awk 'sub(/:\/\/[a-z0-9]*@/, "://") && sub(/\/[0-9]+$
 /scripts/envsub.awk \
   < /usr/share/odk/nginx/odk.conf.template \
   > /etc/nginx/conf.d/odk.conf
-/scripts/envsub.awk \
-  < /usr/share/odk/nginx/backend.conf.template \
-  > /usr/share/odk/nginx/backend.conf
 
 if [ "$SSL_TYPE" = "letsencrypt" ]; then
   echo "starting nginx for letsencrypt..."
