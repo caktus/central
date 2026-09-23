@@ -8,15 +8,21 @@ const { assert } = chai;
 module.exports = {
   assert,
   assertSentryReceived,
+  getReceivedSentryCspReports,
   requestSentryMock,
   resetSentryMock,
+  sleep,
 };
 
-async function assertSentryReceived(...expectedRequests) {
-  const { status, body } = await requestSentryMock({ path:'/event-log' });
+async function getReceivedSentryCspReports() {
+  const { status, body } = await requestSentryMock({ path:'/__mock_sentry/event-log' });
   assert.equal(status, 200);
 
-  const actual = JSON.parse(body);
+  return JSON.parse(body);
+}
+
+async function assertSentryReceived(...expectedRequests) {
+  const actual = await getReceivedSentryCspReports();
 
   try {
     assert.deepEqual(actual, expectedRequests);
@@ -27,13 +33,13 @@ async function assertSentryReceived(...expectedRequests) {
 }
 
 async function resetSentryMock() {
-  const res = await requestSentryMock({ path:'/reset' });
+  const res = await requestSentryMock({ path:'/__mock_sentry/reset' });
   assert.equal(res.status, 200);
 }
 
 // This function makes DIRECT requests to sentry-mock.  IRL these requests
 // would be performed by nginx when a client POSTs to /csp-report.  This
-// function is for used in test setup/assertions, except when confirming the
+// function is for use in test setup/assertions, except when confirming the
 // behaviour of the mock Sentry implementation.
 function requestSentryMock(opts) {
   // servername: SNI extension value - https://nodejs.org/api/https.html#new-agentoptions
@@ -55,4 +61,8 @@ function requestSentryMock(opts) {
     req.on('error', reject);
     req.end();
   });
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }

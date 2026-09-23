@@ -1,21 +1,30 @@
-FROM node:24.14.1-slim AS intermediate
+FROM node:24.20.0-slim AS intermediate
+
+ARG FRONTEND_BUILD_MODE
+ARG FRONTEND_VERSION
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
         git \
     && rm -rf /var/lib/apt/lists/*
 
 COPY ./ ./
-RUN files/prebuild/write-version.sh
 
-ARG SKIP_FRONTEND_BUILD
+RUN files/prebuild/write-version.sh
 RUN files/prebuild/build-frontend.sh
 
 
 
-# when upgrading, look for upstream changes to redirector.conf
-# also, confirm setup-odk.sh strips out HTTP-01 ACME challenge location
-FROM jonasal/nginx-certbot:6.1.0
+# When upgrading:
+#
+# 1. Use full-length tag, including nginx version.  See:
+#    * https://github.com/JonasAlfredsson/docker-nginx-certbot/blob/master/docs/dockerhub_tags.md
+#    * https://hub.docker.com/r/jonasal/nginx-certbot/tags
+# 2. Look for upstream changes to redirector.conf
+# 3. Confirm setup-odk.sh strips out HTTP-01 ACME challenge location.
+FROM jonasal/nginx-certbot:6.2.0-nginx1.31.5
 
 EXPOSE 80
 EXPOSE 443
@@ -32,12 +41,11 @@ COPY files/nginx/setup-odk.sh \
      /scripts/
 
 COPY files/nginx/redirector.conf /usr/share/odk/nginx/
-COPY files/nginx/backend.conf.template /usr/share/odk/nginx/
 COPY files/nginx/common-headers.conf /usr/share/odk/nginx/
 COPY files/nginx/odk.conf.template /usr/share/odk/nginx/
 COPY files/nginx/client-config.json.template /usr/share/odk/nginx/
 COPY files/nginx/robots.txt /usr/share/nginx/html
-COPY --from=intermediate client/dist/ /usr/share/nginx/html
+COPY --from=intermediate dist/ /usr/share/nginx/html
 COPY --from=intermediate /tmp/version.txt /usr/share/nginx/html
 
 ENTRYPOINT [ "/scripts/setup-odk.sh" ]
