@@ -205,7 +205,7 @@ server {
     include /usr/share/odk/nginx/common-headers.conf;
 
     proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_pass http://service:8383;
+    proxy_pass ${SERVICE_URL};
     proxy_redirect off;
 
     proxy_request_buffering on;
