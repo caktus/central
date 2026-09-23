@@ -125,7 +125,7 @@ jobs:
       packages: write
     strategy:
       matrix:
-        image: [nginx, service]
+        image: [nginx, service, secrets, enketo]
     env:
       REGISTRY: ghcr.io
     steps:
